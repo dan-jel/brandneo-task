@@ -1,9 +1,13 @@
 import React from "react";
 
+import Card from "./components/Card";
+import Navigation from "./components/Navigation";
+
 function App() {
   return (
     <div className="App">
-      <h1>blueprint!</h1>
+      <Card />
+      <Navigation />
     </div>
   );
 }
