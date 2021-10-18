@@ -5,24 +5,20 @@ import { useState } from "react";
 import UserForm from "./UserForm";
 
 const Card = () => {
-  const localStorageState = {
-    prename: localStorage.getItem("prename"),
-    surname: localStorage.getItem("surname"),
-    email: localStorage.getItem("email"),
-    street: localStorage.getItem("street"),
-    number: localStorage.getItem("number"),
-    postcode: localStorage.getItem("postcode"),
-    city: localStorage.getItem("prename"),
-  };
-  const [user, setUser] = useState(localStorageState);
-  console.log(user);
+  const storageCache = JSON.parse(localStorage.getItem("user"));
+  if (storageCache) {
+    var initialState = storageCache;
+  } else {
+    var initialState = "";
+  }
 
-  console.log();
+  const [user, setUser] = useState(initialState);
+  console.log(user);
 
   return (
     <Container>
       <CardBox>
-        <UserForm user={user} />
+        <UserForm user={user} setUser={setUser} />
       </CardBox>
     </Container>
   );
