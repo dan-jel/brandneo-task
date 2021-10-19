@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import UserForm from "./UserForm";
+import RandomData from "./RandomData";
 
 const Card = () => {
   const storageCache = JSON.parse(localStorage.getItem("user"));
@@ -13,12 +14,13 @@ const Card = () => {
   }
 
   const [user, setUser] = useState(initialState);
-  console.log(user);
+  console.log("user: ", user);
 
   return (
     <Container>
       <CardBox>
         <UserForm user={user} setUser={setUser} />
+        <RandomData setUser={setUser} />
       </CardBox>
     </Container>
   );

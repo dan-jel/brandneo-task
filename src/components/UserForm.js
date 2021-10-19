@@ -13,7 +13,8 @@ const submitHandler = (
   number,
   postcode,
   city,
-  setUser
+  setUser,
+  complete
 ) => {
   const userDict = {
     prename,
@@ -24,9 +25,15 @@ const submitHandler = (
     postcode,
     city,
   };
-  const userString = JSON.stringify(userDict);
-  localStorage.setItem("user", userString);
-  setUser(userDict);
+  const checkSum = complete.reduce((pv, cv) => pv + cv, 0);
+
+  if (checkSum === 7) {
+    const userString = JSON.stringify(userDict);
+    localStorage.setItem("user", userString);
+    setUser(userDict);
+  } else {
+    console.log("wrong input", complete);
+  }
 };
 
 const UserForm = ({ user, setUser }) => {
@@ -38,6 +45,16 @@ const UserForm = ({ user, setUser }) => {
   const [postcode, setPostcode] = useState(user.postcode);
   const [city, setCity] = useState(user.city);
 
+  const [complete, setComplete] = useState([
+    Boolean(prename),
+    Boolean(surname),
+    Boolean(email),
+    Boolean(street),
+    Boolean(number),
+    Boolean(postcode),
+    Boolean(city),
+  ]);
+
   return (
     <Container>
       <Photo>
@@ -46,54 +63,83 @@ const UserForm = ({ user, setUser }) => {
       <Row>
         <Entry
           width="55%"
+          type="text"
           placeholder="Vorname"
           data={user.prename}
           setInput={setPrename}
+          complete={complete}
+          setComplete={setComplete}
+          id="0"
         />
         <Entry
           width="40%"
+          type="text"
           placeholder="Nachname"
           data={user.surname}
           setInput={setSurname}
+          complete={complete}
+          setComplete={setComplete}
+          id="1"
         />
       </Row>
       <Row>
         <Entry
           width="100%"
+          type="email"
           placeholder="E-Mail-Adresse"
           data={user.email}
           setInput={setEmail}
+          complete={complete}
+          setComplete={setComplete}
+          id="2"
         />
       </Row>
       <Row>
         <Entry
           width="80%"
+          type="text"
           placeholder="Straße"
           data={user.street}
           setInput={setStreet}
+          complete={complete}
+          setComplete={setComplete}
+          id="3"
         />
         <Entry
           width="15%"
+          type="text"
           placeholder="Hsnr."
           data={user.number}
           setInput={setNumber}
+          complete={complete}
+          setComplete={setComplete}
+          id="4"
         />
       </Row>
       <Row>
         <Entry
           width="35%"
+          type="number"
           placeholder="PLZ"
           data={user.postcode}
           setInput={setPostcode}
+          complete={complete}
+          setComplete={setComplete}
+          id="5"
         />
         <Entry
           width="60%"
+          type="text"
           placeholder="Ort"
           data={user.city}
           setInput={setCity}
+          complete={complete}
+          setComplete={setComplete}
+          id="6"
         />
       </Row>
       <FormButton
+        complete={complete}
         onClick={() =>
           submitHandler(
             prename,
@@ -103,11 +149,12 @@ const UserForm = ({ user, setUser }) => {
             number,
             postcode,
             city,
-            setUser
+            setUser,
+            complete
           )
         }
       >
-        Datensatz bearbeiten
+        Datensatz speichern
       </FormButton>
     </Container>
   );
@@ -130,7 +177,10 @@ const FormButton = styled.button`
   bottom: 0;
   border-radius: 15px;
   border: none;
-  background: #b9b9b9;
+  background: ${(props) =>
+    props.complete.reduce((pv, cv) => pv + cv, 0) === 7
+      ? "#1dd1a1"
+      : "#b9b9b9"};
   justify-content: center;
   align-items: center;
   color: white;
@@ -143,7 +193,7 @@ const FormButton = styled.button`
 const Photo = styled.div`
   height: 260px;
   width: 260px;
-  background: blue;
+  background: #f1f2f6;
   border-radius: 100%;
   margin: 0 0 40px 0;
   display: flex;
