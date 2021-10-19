@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import UserForm from "./UserForm";
-import RandomData from "./RandomData";
 
 const Card = () => {
   const storageCache = JSON.parse(localStorage.getItem("user"));
   if (storageCache) {
     var initialState = storageCache;
   } else {
+    // eslint-disable-next-line
     var initialState = "";
   }
 
@@ -20,7 +20,6 @@ const Card = () => {
     <Container>
       <CardBox>
         <UserForm user={user} setUser={setUser} />
-        <RandomData setUser={setUser} />
       </CardBox>
     </Container>
   );

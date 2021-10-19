@@ -23,18 +23,6 @@ const changeHandler = (
       setCorrect(true);
     }
   }
-  // number | postcode
-  else if (type === "number") {
-    // prüfen ob number 5 stellig ist
-    console.log(input.toString().length);
-    if (input.toString().length === 5) {
-      setCorrect(true);
-      console.log("true", input, typeof input, input.length);
-    } else {
-      setCorrect(false);
-      console.log("false", input, typeof input, input.length);
-    }
-  }
   // email | email
   else if (type === "email") {
     if (e.target.validity.valid) {
@@ -77,7 +65,7 @@ const Entry = ({
             setCorrect
           )
         }
-        defaultValue={data}
+        value={data}
       />
       <Line correct={correct} />
     </Container>

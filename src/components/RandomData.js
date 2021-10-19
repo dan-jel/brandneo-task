@@ -4,28 +4,27 @@ import axios from "axios";
 
 import { ReactComponent as DiceIcon } from "../icons/Dice.svg";
 
-const Randomdata = ({ setUser }) => {
+const RandomData = ({
+  setPrename,
+  setSurname,
+  setEmail,
+  setStreet,
+  setNumber,
+  setPostcode,
+  setCity,
+}) => {
   const getData = async () => {
     const res = await axios.get("https://randomuser.me/api/");
     const dummyUser = res.data.results[0];
-    const prename = dummyUser.name.first;
-    const surname = dummyUser.name.last;
-    const email = dummyUser.email;
-    const street = dummyUser.location.street.name;
-    const number = dummyUser.location.street.number;
-    const postcode = dummyUser.location.postcode;
-    const city = dummyUser.location.city;
-    const dummyDict = {
-      prename,
-      surname,
-      email,
-      street,
-      number,
-      postcode,
-      city,
-    };
-    setUser(dummyDict);
-    console.log(dummyDict);
+    setPrename(dummyUser.name.first);
+    setSurname(dummyUser.name.last);
+    setEmail(dummyUser.email);
+    setStreet(dummyUser.location.street.name);
+    setNumber(dummyUser.location.street.number);
+    setPostcode(dummyUser.location.postcode);
+    setCity(dummyUser.location.city);
+
+    console.log(dummyUser);
   };
 
   return (
@@ -37,8 +36,8 @@ const Randomdata = ({ setUser }) => {
 
 const Container = styled.div`
   position: absolute;
-  right: 40px;
-  top: 40px;
+  right: 0px;
+  top: 0px;
   height: 40px;
   width: 40px;
   svg {
@@ -58,4 +57,4 @@ const Container = styled.div`
   }
 `;
 
-export default Randomdata;
+export default RandomData;

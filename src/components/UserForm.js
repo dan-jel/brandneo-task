@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useState } from "react";
 
 import Entry from "./Entry";
+import RandomData from "./RandomData";
 
 import { ReactComponent as Icon } from "../icons/ProfilePic.svg";
 
@@ -57,6 +58,15 @@ const UserForm = ({ user, setUser }) => {
 
   return (
     <Container>
+      <RandomData
+        setPrename={setPrename}
+        setSurname={setSurname}
+        setEmail={setEmail}
+        setStreet={setStreet}
+        setNumber={setNumber}
+        setPostcode={setPostcode}
+        setCity={setCity}
+      />
       <Photo>
         <Icon />
       </Photo>
@@ -65,7 +75,7 @@ const UserForm = ({ user, setUser }) => {
           width="55%"
           type="text"
           placeholder="Vorname"
-          data={user.prename}
+          data={prename}
           setInput={setPrename}
           complete={complete}
           setComplete={setComplete}
@@ -75,7 +85,7 @@ const UserForm = ({ user, setUser }) => {
           width="40%"
           type="text"
           placeholder="Nachname"
-          data={user.surname}
+          data={surname}
           setInput={setSurname}
           complete={complete}
           setComplete={setComplete}
@@ -87,7 +97,7 @@ const UserForm = ({ user, setUser }) => {
           width="100%"
           type="email"
           placeholder="E-Mail-Adresse"
-          data={user.email}
+          data={email}
           setInput={setEmail}
           complete={complete}
           setComplete={setComplete}
@@ -99,7 +109,7 @@ const UserForm = ({ user, setUser }) => {
           width="80%"
           type="text"
           placeholder="Straße"
-          data={user.street}
+          data={street}
           setInput={setStreet}
           complete={complete}
           setComplete={setComplete}
@@ -109,7 +119,7 @@ const UserForm = ({ user, setUser }) => {
           width="15%"
           type="text"
           placeholder="Hsnr."
-          data={user.number}
+          data={number}
           setInput={setNumber}
           complete={complete}
           setComplete={setComplete}
@@ -119,9 +129,9 @@ const UserForm = ({ user, setUser }) => {
       <Row>
         <Entry
           width="35%"
-          type="number"
+          type="text"
           placeholder="PLZ"
-          data={user.postcode}
+          data={postcode}
           setInput={setPostcode}
           complete={complete}
           setComplete={setComplete}
@@ -131,7 +141,7 @@ const UserForm = ({ user, setUser }) => {
           width="60%"
           type="text"
           placeholder="Ort"
-          data={user.city}
+          data={city}
           setInput={setCity}
           complete={complete}
           setComplete={setComplete}
