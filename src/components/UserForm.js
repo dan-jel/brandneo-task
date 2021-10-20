@@ -14,8 +14,8 @@ const submitHandler = (
   number,
   postcode,
   city,
-  setUser,
-  complete
+  image,
+  setUser
 ) => {
   const userDict = {
     prename,
@@ -25,16 +25,11 @@ const submitHandler = (
     number,
     postcode,
     city,
+    image,
   };
-  const checkSum = complete.reduce((pv, cv) => pv + cv, 0);
-
-  if (checkSum === 7) {
-    const userString = JSON.stringify(userDict);
-    localStorage.setItem("user", userString);
-    setUser(userDict);
-  } else {
-    console.log("wrong input", complete);
-  }
+  const userString = JSON.stringify(userDict);
+  localStorage.setItem("user", userString);
+  setUser(userDict);
 };
 
 const UserForm = ({ user, setUser }) => {
@@ -45,16 +40,9 @@ const UserForm = ({ user, setUser }) => {
   const [number, setNumber] = useState(user.number);
   const [postcode, setPostcode] = useState(user.postcode);
   const [city, setCity] = useState(user.city);
+  const [image, setImage] = useState(user.image);
 
-  const [complete, setComplete] = useState([
-    Boolean(prename),
-    Boolean(surname),
-    Boolean(email),
-    Boolean(street),
-    Boolean(number),
-    Boolean(postcode),
-    Boolean(city),
-  ]);
+  const [loading, setLoading] = useState(false);
 
   return (
     <Container>
@@ -66,8 +54,11 @@ const UserForm = ({ user, setUser }) => {
         setNumber={setNumber}
         setPostcode={setPostcode}
         setCity={setCity}
+        setImage={setImage}
+        setLoading={setLoading}
       />
       <Photo>
+        <img src={image} alt="" />
         <Icon />
       </Photo>
       <Row>
@@ -77,9 +68,8 @@ const UserForm = ({ user, setUser }) => {
           placeholder="Vorname"
           data={prename}
           setInput={setPrename}
-          complete={complete}
-          setComplete={setComplete}
           id="0"
+          loading={loading}
         />
         <Entry
           width="40%"
@@ -87,9 +77,8 @@ const UserForm = ({ user, setUser }) => {
           placeholder="Nachname"
           data={surname}
           setInput={setSurname}
-          complete={complete}
-          setComplete={setComplete}
           id="1"
+          loading={loading}
         />
       </Row>
       <Row>
@@ -99,9 +88,8 @@ const UserForm = ({ user, setUser }) => {
           placeholder="E-Mail-Adresse"
           data={email}
           setInput={setEmail}
-          complete={complete}
-          setComplete={setComplete}
           id="2"
+          loading={loading}
         />
       </Row>
       <Row>
@@ -111,9 +99,8 @@ const UserForm = ({ user, setUser }) => {
           placeholder="Straße"
           data={street}
           setInput={setStreet}
-          complete={complete}
-          setComplete={setComplete}
           id="3"
+          loading={loading}
         />
         <Entry
           width="15%"
@@ -121,9 +108,8 @@ const UserForm = ({ user, setUser }) => {
           placeholder="Hsnr."
           data={number}
           setInput={setNumber}
-          complete={complete}
-          setComplete={setComplete}
           id="4"
+          loading={loading}
         />
       </Row>
       <Row>
@@ -133,9 +119,8 @@ const UserForm = ({ user, setUser }) => {
           placeholder="PLZ"
           data={postcode}
           setInput={setPostcode}
-          complete={complete}
-          setComplete={setComplete}
           id="5"
+          loading={loading}
         />
         <Entry
           width="60%"
@@ -143,13 +128,11 @@ const UserForm = ({ user, setUser }) => {
           placeholder="Ort"
           data={city}
           setInput={setCity}
-          complete={complete}
-          setComplete={setComplete}
           id="6"
+          loading={loading}
         />
       </Row>
       <FormButton
-        complete={complete}
         onClick={() =>
           submitHandler(
             prename,
@@ -159,8 +142,8 @@ const UserForm = ({ user, setUser }) => {
             number,
             postcode,
             city,
-            setUser,
-            complete
+            image,
+            setUser
           )
         }
       >
@@ -187,10 +170,7 @@ const FormButton = styled.button`
   bottom: 0;
   border-radius: 15px;
   border: none;
-  background: ${(props) =>
-    props.complete.reduce((pv, cv) => pv + cv, 0) === 7
-      ? "#1dd1a1"
-      : "#b9b9b9"};
+  background: #1dd1a1;
   justify-content: center;
   align-items: center;
   color: white;
@@ -209,6 +189,13 @@ const Photo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  position: relative;
+  img {
+    position: absolute;
+    height: 260px;
+    width: 260px;
+  }
 `;
 
 const Row = styled.div`

@@ -14,7 +14,6 @@ const Card = () => {
   }
 
   const [user, setUser] = useState(initialState);
-  console.log("user: ", user);
 
   return (
     <Container>

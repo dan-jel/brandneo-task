@@ -1,16 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const changeHandler = (
-  e,
-  setInput,
-  type,
-  id,
-  complete,
-  setComplete,
-  correct,
-  setCorrect
-) => {
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
+const changeHandler = (e, setInput, type, id, correct, setCorrect) => {
   const input = e.target.value;
   setInput(input);
 
@@ -31,42 +25,31 @@ const changeHandler = (
       setCorrect(false);
     }
   }
-  const newDict = complete;
-  newDict[id] = correct;
-  setComplete(newDict);
 };
 
-const Entry = ({
-  width,
-  placeholder,
-  data,
-  setInput,
-  type,
-  id,
-  complete,
-  setComplete,
-}) => {
+const Entry = ({ width, placeholder, data, setInput, type, id, loading }) => {
   const [correct, setCorrect] = useState(true);
 
   return (
     <Container width={width}>
-      <input
-        type={type}
-        placeholder={placeholder}
-        onChange={(e) =>
-          changeHandler(
-            e,
-            setInput,
-            type,
-            id,
-            complete,
-            setComplete,
-            correct,
-            setCorrect
-          )
-        }
-        value={data}
-      />
+      {loading ? (
+        <Loader
+          className="anim"
+          type="ThreeDots"
+          color="#89898c"
+          height={30}
+          width={60}
+        />
+      ) : (
+        <input
+          type={type}
+          placeholder={placeholder}
+          onChange={(e) =>
+            changeHandler(e, setInput, type, id, correct, setCorrect)
+          }
+          value={data}
+        />
+      )}
       <Line correct={correct} />
     </Container>
   );
@@ -76,6 +59,14 @@ const Container = styled.div`
   height: 100%;
   width: ${(props) => props.width};
   border: none;
+  position: relative;
+  .anim {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   input {
     font-size: 16px;
     color: #222222;
@@ -91,6 +82,8 @@ const Container = styled.div`
 `;
 
 const Line = styled.div`
+  position: absolute;
+  bottom: 0;
   height: 2px;
   width: 100%;
   background: ${(props) => (props.correct ? "#10ac84" : "#ff0018")};

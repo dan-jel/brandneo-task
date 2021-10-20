@@ -12,8 +12,11 @@ const RandomData = ({
   setNumber,
   setPostcode,
   setCity,
+  setImage,
+  setLoading,
 }) => {
   const getData = async () => {
+    setLoading(true);
     const res = await axios.get("https://randomuser.me/api/");
     const dummyUser = res.data.results[0];
     setPrename(dummyUser.name.first);
@@ -23,8 +26,8 @@ const RandomData = ({
     setNumber(dummyUser.location.street.number);
     setPostcode(dummyUser.location.postcode);
     setCity(dummyUser.location.city);
-
-    console.log(dummyUser);
+    setImage(dummyUser.picture.large);
+    setLoading(false);
   };
 
   return (
