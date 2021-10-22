@@ -33,14 +33,14 @@ const submitHandler = (
 };
 
 const UserForm = ({ user, setUser }) => {
-  const [prename, setPrename] = useState(user.prename);
-  const [surname, setSurname] = useState(user.surname);
-  const [email, setEmail] = useState(user.email);
-  const [street, setStreet] = useState(user.street);
-  const [number, setNumber] = useState(user.number);
-  const [postcode, setPostcode] = useState(user.postcode);
-  const [city, setCity] = useState(user.city);
-  const [image, setImage] = useState(user.image);
+  const [prename, setPrename] = useState(user.prename ? user.prename : "");
+  const [surname, setSurname] = useState(user.surname ? user.surname : "");
+  const [email, setEmail] = useState(user.email ? user.email : "");
+  const [street, setStreet] = useState(user.street ? user.street : "");
+  const [number, setNumber] = useState(user.number ? user.number : "");
+  const [postcode, setPostcode] = useState(user.postcode ? user.postcode : "");
+  const [city, setCity] = useState(user.city ? user.city : "");
+  const [image, setImage] = useState(user.image ? user.image : "");
 
   const [loading, setLoading] = useState(false);
 
@@ -193,8 +193,8 @@ const Photo = styled.div`
   position: relative;
   img {
     position: absolute;
-    height: 260px;
-    width: 260px;
+    height: 262px;
+    width: 262px;
   }
 `;
 
